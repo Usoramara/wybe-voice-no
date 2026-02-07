@@ -138,7 +138,7 @@ for f in ['ve.safetensors', 't3_cfg.safetensors', 's3gen.safetensors', 'tokenize
 
 print('[INFO] Pre-downloading Whisper large-v3-turbo ASR model...')
 from faster_whisper import WhisperModel
-WhisperModel('large-v3-turbo', device='cpu', compute_type='float16')
+WhisperModel('large-v3-turbo', device='cpu', compute_type='int8')
 
 print('[INFO] All models cached.')
 "
