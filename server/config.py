@@ -13,9 +13,9 @@ class Settings(BaseSettings):
     # HuggingFace
     hf_token: str = ""
 
-    # ASR — NB-Whisper
-    asr_model: str = "NbAiLab/nb-whisper-large-distil-turbo-beta"
-    asr_compute_type: str = "int8"
+    # ASR — Whisper large-v3-turbo (great Norwegian support, pre-built CT2)
+    asr_model: str = "large-v3-turbo"
+    asr_compute_type: str = "float16"
     asr_beam_size: int = 1
     asr_language: str = "no"
 

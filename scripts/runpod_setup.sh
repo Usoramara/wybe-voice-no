@@ -136,9 +136,9 @@ print('[INFO] Downloading Norwegian TTS model files...')
 for f in ['ve.safetensors', 't3_cfg.safetensors', 's3gen.safetensors', 'tokenizer.json', 'conds.pt']:
     hf_hub_download('akhbar/chatterbox-tts-norwegian', filename=f, token=token)
 
-print('[INFO] Pre-loading NB-Whisper ASR (auto-converts to CT2 on first load)...')
+print('[INFO] Pre-downloading Whisper large-v3-turbo ASR model...')
 from faster_whisper import WhisperModel
-WhisperModel('NbAiLab/nb-whisper-large-distil-turbo-beta', device='cpu', compute_type='int8')
+WhisperModel('large-v3-turbo', device='cpu', compute_type='float16')
 
 print('[INFO] All models cached.')
 "
