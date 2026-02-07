@@ -25,7 +25,8 @@ class Settings(BaseSettings):
     llm_gpu_layers: int = -1  # -1 = all layers on GPU
     llm_context_length: int = 4096
     llm_max_tokens: int = 256
-    llm_temperature: float = 0.7
+    llm_temperature: float = 0.3
+    llm_repeat_penalty: float = 1.0  # Disabled — NorMistral is sensitive to repeat penalty
     llm_top_p: float = 0.9
 
     # TTS — Chatterbox Norwegian
