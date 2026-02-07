@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     # TTS — Chatterbox Norwegian
     tts_model: str = "akhbar/chatterbox-tts-norwegian"
     tts_speaker_wav: str = ""  # Path to reference speaker wav for voice cloning
-    tts_exaggeration: float = 0.5
+    tts_exaggeration: float = 1.0  # Norwegian model works best at 1.0
     tts_cfg_weight: float = 0.5
 
     # VAD — Silero
