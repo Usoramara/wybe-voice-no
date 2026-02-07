@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "wybe-voice-no"
+version = "0.1.0"
+description = "Real-time Norwegian voice conversation service for Wybe robotics"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "websockets>=13.0",
+    "numpy>=1.26",
+    "torch>=2.4",
+    "torchaudio>=2.4",
+    "faster-whisper>=1.1",
+    "llama-cpp-python>=0.3",
+    "huggingface-hub>=0.26",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "pydub>=0.25",
+    "soundfile>=0.12",
+    "silero-vad>=5.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.7",
+]
+
+[tool.setuptools.packages.find]
+include = ["server*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
