@@ -116,11 +116,6 @@ info "Installing chatterbox-tts..."
 pip install --quiet chatterbox-tts
 info "chatterbox-tts installed."
 
-# Install ctranslate2 + transformers for NB-Whisper CT2 conversion
-info "Installing ctranslate2 and transformers (for ASR model conversion)..."
-pip install --quiet ctranslate2 "transformers[torch]"
-info "CT2 tools installed."
-
 # ─── Step 5: Pre-download model weights ─────────────────────────────────────
 
 export HF_HOME="$CACHE_DIR"
@@ -128,8 +123,6 @@ export HF_HOME="$CACHE_DIR"
 info "Pre-downloading model weights..."
 info "  Cache directory: $CACHE_DIR"
 info "  (This may take several minutes on first run — skips if already cached)"
-
-export ASR_CT2_DIR="$CACHE_DIR/nb-whisper-ct2"
 
 python -c "
 import os
@@ -143,23 +136,14 @@ print('[INFO] Downloading Norwegian TTS model files...')
 for f in ['ve.safetensors', 't3_cfg.safetensors', 's3gen.safetensors', 'tokenizer.json', 'conds.pt']:
     hf_hub_download('akhbar/chatterbox-tts-norwegian', filename=f, token=token)
 
-print('[INFO] Models cached.')
+print('[INFO] Pre-loading NB-Whisper ASR (auto-converts to CT2 on first load)...')
+from faster_whisper import WhisperModel
+WhisperModel('NbAiLab/nb-whisper-large-distil-turbo-beta', device='cpu', compute_type='int8')
+
+print('[INFO] All models cached.')
 "
 
-# Convert NB-Whisper to CTranslate2 format (idempotent — skips if already done)
-if [[ -f "$ASR_CT2_DIR/model.bin" ]]; then
-    info "NB-Whisper CT2 model already converted."
-else
-    info "Converting NB-Whisper to CTranslate2 format (one-time, ~5 min)..."
-    ct2-transformers-converter \
-        --model NbAiLab/nb-whisper-large-distil-turbo-beta \
-        --output_dir "$ASR_CT2_DIR" \
-        --copy_files tokenizer.json preprocessor_config.json \
-        --quantization int8
-    info "NB-Whisper CT2 conversion complete."
-fi
-
-info "All model weights cached and converted."
+info "All model weights cached."
 
 # ─── Step 6: Launch the server ───────────────────────────────────────────────
 
